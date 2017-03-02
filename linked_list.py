@@ -42,18 +42,30 @@ class LinkedList:
             next_node = next_node.next
         return print_string
 
-    def add_node(self, _node):
+    def add_node(self, _node):        
         if self.node is None:
             self.node = _node
             self.node_count += 1
             return True
 
         next_node = self.node
-        while next_node.next:
+        while next_node:
+            if next_node.next is None:
+                break
             next_node = next_node.next
 
-        if next_node.next is None:
-            next_node.next = _node
+        next_node.next = _node
+        self.node_count += 1
+        return True
+
+    def add_node_at_head(self, _node):
+        if self.node is None:
+            self.node = _node
+            self.node_count += 1
+            return True
+        else:
+            _node.next = self.node
+            self.node = _node
             self.node_count += 1
             return True
 
@@ -81,6 +93,8 @@ class LinkedList:
             next_node = next_node.next
 
         return False
+
+
 def linked_list_test():
     head_node = Node(1)
     linked_list = LinkedList(head_node)
@@ -118,22 +132,45 @@ def linked_list_test():
     print 'list size', linked_list.linked_list_size()
     print'=============================================='
 
-
     node_1 = Node(2)
     node_2 = Node(3)
     node_3 = Node(4)
     node_4 = Node(6)
+    print linked_list.add_node_at_head(node_4)
+    print linked_list.print_linked_list(True)
+    print '----------------add node4 --------------------'
+
     print linked_list.add_node(node_1)
-    print linked_list.print_linked_list(False)
+    print linked_list.print_linked_list(True)
+    print '----------------add node1 ---------------------------'
+
     print linked_list.add_node(node_2)
     print 'list size', linked_list.linked_list_size()
     print linked_list.print_linked_list(False)
+    print '----------------add node2 ---------------------------'
+
     print linked_list.add_node(node_3)
-    print linked_list.print_linked_list(False)
-    print linked_list.add_node(node_4)
     print 'list size', linked_list.linked_list_size()
     print linked_list.print_linked_list(False)
+    print '----------------add node3 ---------------------------'
 
+    node_5 = Node(5)
+    print linked_list.add_node(node_5)
+    print 'list size', linked_list.linked_list_size()
+    print linked_list.print_linked_list(False)
+    print '----------------add node5 ---------------------------'
+
+    node_6 = Node('head_node')
+    print linked_list.add_node_at_head(node_6)
+    print 'list size', linked_list.linked_list_size()
+    print linked_list.print_linked_list(False)
+    print '----------------add head node ---------------------------'
+
+    node_6 = Node('tail')
+    print linked_list.add_node(node_6)
+    print 'list size', linked_list.linked_list_size()
+    print linked_list.print_linked_list(False)
+    print '----------------add tail ---------------------------'
 
 if __name__ == '__main__':
     linked_list_test()
